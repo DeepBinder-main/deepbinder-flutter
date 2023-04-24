@@ -1,0 +1,87 @@
+name: deepbinder
+description: A new Flutter project.
+publish_to: 'none'
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.5
+  firebase_core: ^2.8.0
+  cloud_firestore: ^4.4.5
+  firebase_auth: ^4.2.5
+  google_fonts: ^3.0.1
+  font_awesome_flutter: ^10.3.0
+  google_sign_in: ^5.4.3
+  # firebase_messaging: ^14.2.6
+  json_annotation: ^4.5.0
+  rxdart: ^0.27.7
+  provider: ^6.0.5
+  camera: ^0.10.3+2
+  # flutter_local_notifications: ^8.2.0
+  overlay_support: ^2.1.0
+  # google_sign_in: 5.3.3
+  # sign_in_with_apple: 4.0.0
+  # crypto: 3.0.1
+  # font_awesome_flutter: 10.1.0
+  # google_fonts: 3.0.1
+  # provider: 6.0.3
+  # rxdart: 0.27.4
+  # json_annotation: 4.5.0
+
+
+  auto_size_text: 3.0.0
+  badges: 2.0.2
+  cached_network_image: 3.2.1
+  file_picker: 4.5.1
+  flutter_animate: 1.0.0
+  flutter_cache_manager: 3.3.0
+  # font_awesome_flutter: 10.1.0
+  from_css_color: 2.0.0
+  # google_fonts: 3.0.1
+  image_picker: 0.8.5+3
+  image_picker_android: 0.8.5+3
+  image_picker_for_web: 2.1.10
+  image_picker_ios: 0.8.6+1
+  image_picker_platform_interface: 2.6.2
+  intl: 0.17.0
+  json_path: 0.4.1
+  mime_type: 1.0.0
+  page_transition: 2.0.4
+  plugin_platform_interface: 2.1.3
+  # provider: 6.0.4
+  shared_preferences: 2.0.15
+  sqflite: 2.2.0+2
+  timeago: 3.2.2
+  url_launcher: 6.1.5
+  video_player: 2.4.5
+  video_player_android: 2.3.8
+  video_player_avfoundation: 2.3.5
+  video_player_platform_interface: 5.1.3
+  video_player_web: 2.0.12
+  webview_flutter: ^4.0.7
+  numerus: ^2.0.0
+  dio: ^5.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+  build_runner: 2.1.11
+  json_serializable: 6.2.0
+
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    # assets/images
+    - assets/images/logo-black-removebg-previewcopy.png
+    - assets/images/logo-no-background_(2).png
+    - assets/images/logo-no-background.png
