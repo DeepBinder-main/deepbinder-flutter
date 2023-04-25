@@ -1,10 +1,12 @@
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
+import 'package:deepbinder/routes/session_modal.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 // import 'package:quizz/routes.dart';
 // import 'package:quizz/services/services.dart';
 // import 'package:deepbinder/routes/shared.dart';
 import 'package:deepbinder/routes/home.dart';
+import 'package:provider/provider.dart';
 // import 'package:quizz/theme.dart';
 
 void main() {
@@ -20,7 +22,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  // final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,19 @@ class _AppState extends State<App> {
     //     return const MaterialApp(home: LoadingScreen());
     //   },
     // );
-    return const MaterialApp(home: MainWidget());
+    // add provider
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'DeepBinder',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MainWidget(),
+      ),
+    );
   }
 }

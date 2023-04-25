@@ -1,17 +1,14 @@
 // import 'package:dio/dio.dart';
-
+import 'package:deepbinder/routes.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:deepbinder/routes/page.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-// import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-// import '/main.dart';
-// import '/pages/register/register_widget.dart';
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:provider/provider.dart';
-// import 'package:deepbinder/routes/login_model.dart';
-
-// import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:deepbinder/routes/session_modal.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
@@ -26,56 +23,76 @@ class _LoginWidgetState extends State<LoginWidget> {
   TextEditingController domainController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  @override
-  void initState() {
-    // _passwordVisible = false;
-    // super.initState();
 
-    // _model = createModel(context, () => LoginModel());
-  }
   bool _isLoading = false;
-  // late String _errorMessage;
+
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  Future setLoginStatus() async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Page1()));
+  }
 
   Future<void> _login() async {
     setState(() {
       _isLoading = true;
       // _errorMessage;
     });
+
     try {
       print('hello');
       var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
       var request = http.Request(
           'POST', Uri.parse(domainController.text + '/api/tokens?token=null'));
-      request.bodyFields = {'username': 'vitap', 'password': 'sag_2023'};
+      request.bodyFields = {
+        'username': usernameController.text,
+        'password': passwordController.text
+      };
       request.headers.addAll(headers);
 
       http.StreamedResponse response = await request.send();
 
       if (response.statusCode == 200) {
-        print(await response.stream.bytesToString());
+        var authtoken = await response.stream.bytesToString();
+        print(authtoken);
+        // return 'logged In';
+        // snackbar
+        final snackBar = SnackBar(
+          content: Text('Logged In!  ' + authtoken.toString()),
+          backgroundColor: (Colors.black),
+          action: SnackBarAction(
+            label: 'dismiss',
+            onPressed: () {},
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        final SharedPreferences prefs = await _prefs;
+        prefs.setBool("isLoggedIn", true);
+        // showSimpleNotification(const Text("You are logged In"),
+        // background: Colors.green);
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const Page1();
+        }));
+        // setLoginStatus();
       } else {
-        print(response.reasonPhrase);
+        // print(response.reasonPhrase);
+        final snackBar = SnackBar(
+          content: Text(response.reasonPhrase.toString()),
+          backgroundColor: (Colors.black),
+          action: SnackBarAction(
+            label: 'dismiss',
+            onPressed: () {},
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        // return 'login Failed!';
       }
-
-      // if (response.statusCode == 200) {
-      //   print('login success');
-      //   // Login successful, navigate to home screen
-      //   Navigator.of(context).pushNamed('/home');
-      // } else if (response.statusCode == 401) {
-      //   // Login failed, show error message
-      //   print('Invalid username or password');
-      //   // setState(() {
-      //   //   _errorMessage = 'Invalid username or password';
-      //   // });
-      // } else {
-      //   throw Exception('Unexpected status code: ${response.statusCode}');
-      // }
     } catch (e) {
       // Handle network errors
       print('network error');
       // setState(() {
       //   _errorMessage = 'Network error occurred, please try again later.';
       // });
+      // return 'network error';
     } finally {
       setState(() {
         _isLoading = false;
@@ -86,6 +103,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   @override
   Widget build(BuildContext context) {
     bool _passwordVisibility = false;
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryColor,
@@ -111,25 +130,27 @@ class _LoginWidgetState extends State<LoginWidget> {
                         ).image,
                       ),
                     ),
-                    alignment: AlignmentDirectional(-0.5, 0.30000000000000004),
+                    alignment:
+                        const AlignmentDirectional(-0.5, 0.30000000000000004),
                   ),
                 ],
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 18),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 18),
                               child: TextFormField(
                                 controller: domainController,
                                 obscureText: false,
@@ -140,7 +161,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Outfit',
-                                        color: Color(0x9AFFFFFF),
+                                        color: const Color(0x9AFFFFFF),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -149,19 +170,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       width: 1,
                                     ),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
                                   ),
-                                  errorBorder: OutlineInputBorder(
+                                  errorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
                                   ),
-                                  focusedErrorBorder: OutlineInputBorder(
+                                  focusedErrorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
@@ -196,7 +217,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     .bodyText1
                                     .override(
                                       fontFamily: 'Outfit',
-                                      color: Color(0x9AFFFFFF),
+                                      color: const Color(0x9AFFFFFF),
                                     ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -205,19 +226,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     width: 1,
                                   ),
                                 ),
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                 ),
-                                errorBorder: OutlineInputBorder(
+                                errorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
                                 ),
-                                focusedErrorBorder: OutlineInputBorder(
+                                focusedErrorBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
@@ -242,8 +263,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                               },
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 20, 0, 0),
                               child: TextFormField(
                                 controller: passwordController,
                                 obscureText: !_passwordVisibility,
@@ -254,7 +275,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Outfit',
-                                        color: Color(0x9AFFFFFF),
+                                        color: const Color(0x9AFFFFFF),
                                       ),
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -263,19 +284,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       width: 1,
                                     ),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
+                                  focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
                                   ),
-                                  errorBorder: OutlineInputBorder(
+                                  errorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
                                   ),
-                                  focusedErrorBorder: OutlineInputBorder(
+                                  focusedErrorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
@@ -299,7 +320,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       _passwordVisibility
                                           ? Icons.visibility_outlined
                                           : Icons.visibility_off_outlined,
-                                      color: Color(0x80FFFFFF),
+                                      color: const Color(0x80FFFFFF),
                                       size: 22,
                                     ),
                                   ),
@@ -314,28 +335,38 @@ class _LoginWidgetState extends State<LoginWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 24, 0, 0),
                               child: FFButtonWidget(
-                                onPressed: () {
+                                onPressed: () async {
                                   print('Button pressed ...');
                                   print(usernameController.text);
-                                  print(domainController.text);
                                   print(passwordController.text);
+                                  print(domainController.text);
                                   if (_formKey.currentState!.validate()) {
-                                    _login();
-                                  } else {
-                                    _login();
+                                    // _login();
+                                    try {
+                                      await authProvider.login(
+                                        context,
+                                        usernameController.text,
+                                        passwordController.text,
+                                        domainController.text,
+                                      );
+                                      // Navigator.of(context).pop();
+                                    } catch (e) {
+                                      print(e);
+                                    }
                                   }
                                 },
                                 text: 'Login',
                                 options: FFButtonOptions(
                                   width: 200,
                                   height: 50,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 0),
+                                  iconPadding:
+                                      const EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 0),
                                   color: Colors.black,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .title1
@@ -345,7 +376,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                   elevation: 3,
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1,
                                   ),
@@ -354,16 +385,17 @@ class _LoginWidgetState extends State<LoginWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 44, 0, 30),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 44, 0, 30),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 6),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 6),
                                     child: Text(
                                       'Don’t have an account yet? ',
                                       style: FlutterFlowTheme.of(context)
@@ -381,10 +413,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     options: FFButtonOptions(
                                       width: 100,
                                       height: 32,
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 0, 0),
                                       iconPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
+                                          const EdgeInsetsDirectional.fromSTEB(
                                               0, 0, 0, 0),
                                       color: FlutterFlowTheme.of(context)
                                           .primaryColor,
@@ -395,7 +428,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             color: Colors.white,
                                           ),
                                       elevation: 0,
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
                                       ),
