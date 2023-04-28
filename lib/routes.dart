@@ -4,9 +4,12 @@
 // import 'package:quizz/topics/topics.dart';
 // import 'package:quizz/about/about.dart';
 // import 'dart:js';
-import 'package:deepbinder/routes/page.dart';
+// import 'package:deepbinder/routes/page.dart';
+import 'package:deepbinder/routes/about.dart';
 import 'package:deepbinder/routes/home.dart';
 import 'package:deepbinder/routes/login.dart';
+import 'package:deepbinder/routes/users.dart';
+import 'routes/profile.dart';
 // import 'package:quizz/quizz/quizz.dart';
 // import 'package:quizz/profile/profile.dart';
 // import 'realtime/realtime.dart';
@@ -14,10 +17,11 @@ import 'package:deepbinder/routes/login.dart';
 var appRoutes = {
   // '/': (context) => HomeScreen(),
   '/login': (context) => LoginWidget(),
-  '/home': (context) => MainWidget(),
-  '/page': (context) => Page1(),
+  '/home': (context) => MyApp(),
+  '/users': (context) => Users(),
+  // '/page': (context) => Page1(),
   // '/topics': (context) => TopicsScreen(),
-  // '/profile': (context) => ProfileScreen(),
+  '/profile': (context) => Profile(),
   // '/about': (context) => AboutScreen(),
   // '/realtime': (context) => RealScreen(title: 'Realtime')
 };

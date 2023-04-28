@@ -64,6 +64,7 @@ class _AppState extends State<App> {
           primarySwatch: Colors.blue,
         ),
         home: const MainWidget(),
+        
       ),
     );
   }

@@ -6,6 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:deepbinder/routes/login.dart';
 
+import 'nav_bar.dart';
+
 class MainWidget extends StatefulWidget {
   const MainWidget({Key? key}) : super(key: key);
 
@@ -38,6 +40,7 @@ class _MainWidgetState extends State<MainWidget> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: Scaffold(
+        bottomNavigationBar: BottomNavBar(),
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
         body: SafeArea(

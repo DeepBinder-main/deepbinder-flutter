@@ -1,9 +1,11 @@
 // import 'package:dio/dio.dart';
 import 'package:deepbinder/routes.dart';
+import 'package:deepbinder/routes/home.dart';
+import 'package:deepbinder/routes/profile.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:deepbinder/routes/page.dart';
+// import 'package:deepbinder/routes/page.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
@@ -29,76 +31,76 @@ class _LoginWidgetState extends State<LoginWidget> {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   Future setLoginStatus() async {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const Page1()));
+        context, MaterialPageRoute(builder: (context) => const MainWidget()));
   }
 
-  Future<void> _login() async {
-    setState(() {
-      _isLoading = true;
-      // _errorMessage;
-    });
+  // Future<void> _login() async {
+  //   setState(() {
+  //     _isLoading = true;
+  //     // _errorMessage;
+  //   });
 
-    try {
-      print('hello');
-      var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-      var request = http.Request(
-          'POST', Uri.parse(domainController.text + '/api/tokens?token=null'));
-      request.bodyFields = {
-        'username': usernameController.text,
-        'password': passwordController.text
-      };
-      request.headers.addAll(headers);
+  //   try {
+  //     print('hello');
+  //     var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+  //     var request = http.Request(
+  //         'POST', Uri.parse(domainController.text + '/api/tokens?token=null'));
+  //     request.bodyFields = {
+  //       'username': usernameController.text,
+  //       'password': passwordController.text
+  //     };
+  //     request.headers.addAll(headers);
 
-      http.StreamedResponse response = await request.send();
+  //     http.StreamedResponse response = await request.send();
 
-      if (response.statusCode == 200) {
-        var authtoken = await response.stream.bytesToString();
-        print(authtoken);
-        // return 'logged In';
-        // snackbar
-        final snackBar = SnackBar(
-          content: Text('Logged In!  ' + authtoken.toString()),
-          backgroundColor: (Colors.black),
-          action: SnackBarAction(
-            label: 'dismiss',
-            onPressed: () {},
-          ),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        final SharedPreferences prefs = await _prefs;
-        prefs.setBool("isLoggedIn", true);
-        // showSimpleNotification(const Text("You are logged In"),
-        // background: Colors.green);
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return const Page1();
-        }));
-        // setLoginStatus();
-      } else {
-        // print(response.reasonPhrase);
-        final snackBar = SnackBar(
-          content: Text(response.reasonPhrase.toString()),
-          backgroundColor: (Colors.black),
-          action: SnackBarAction(
-            label: 'dismiss',
-            onPressed: () {},
-          ),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        // return 'login Failed!';
-      }
-    } catch (e) {
-      // Handle network errors
-      print('network error');
-      // setState(() {
-      //   _errorMessage = 'Network error occurred, please try again later.';
-      // });
-      // return 'network error';
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
+  //     if (response.statusCode == 200) {
+  //       var authtoken = await response.stream.bytesToString();
+  //       print(authtoken);
+  //       // return 'logged In';
+  //       // snackbar
+  //       final snackBar = SnackBar(
+  //         content: Text('Logged In!  ' + authtoken.toString()),
+  //         backgroundColor: (Colors.black),
+  //         action: SnackBarAction(
+  //           label: 'dismiss',
+  //           onPressed: () {},
+  //         ),
+  //       );
+  //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //       final SharedPreferences prefs = await _prefs;
+  //       prefs.setBool("isLoggedIn", true);
+  //       // showSimpleNotification(const Text("You are logged In"),
+  //       // background: Colors.green);
+  //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //         return const Page1();
+  //       }));
+  //       // setLoginStatus();
+  //     } else {
+  //       // print(response.reasonPhrase);
+  //       final snackBar = SnackBar(
+  //         content: Text(response.reasonPhrase.toString()),
+  //         backgroundColor: (Colors.black),
+  //         action: SnackBarAction(
+  //           label: 'dismiss',
+  //           onPressed: () {},
+  //         ),
+  //       );
+  //       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //       // return 'login Failed!';
+  //     }
+  //   } catch (e) {
+  //     // Handle network errors
+  //     print('network error');
+  //     // setState(() {
+  //     //   _errorMessage = 'Network error occurred, please try again later.';
+  //     // });
+  //     // return 'network error';
+  //   } finally {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

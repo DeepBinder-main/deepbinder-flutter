@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:deepbinder/routes/about.dart';
-import 'package:deepbinder/routes/page2.dart';
+// import 'package:deepbinder/routes/page2.dart';
 import 'package:deepbinder/routes/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'page.dart';
+// import 'page.dart';
 import 'profile_modal.dart';
 
 class User {
@@ -76,7 +76,7 @@ class AuthProvider extends ChangeNotifier {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return MyApp();
+        return const Profile();
       }));
     } else {
       // throw Exception('Failed to login');
