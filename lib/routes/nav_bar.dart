@@ -1,3 +1,4 @@
+import "package:deepbinder/routes/create.dart";
 import "package:deepbinder/routes/users.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
@@ -6,18 +7,19 @@ import "about.dart";
 import "profile.dart";
 
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
+  const BottomNavBar(int i, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      items: [
+      // selectedItemColor: Colors.red,
+      items: const [
         BottomNavigationBarItem(
             icon: Icon(
               Icons.list_alt_rounded,
               size: 20,
             ),
-            label: "List of Connections"),
+            label: "Connections"),
         BottomNavigationBarItem(
             icon: Icon(
               Icons.home,
@@ -40,12 +42,12 @@ class BottomNavBar extends StatelessWidget {
             break;
           case 1:
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyApp()));
+                context, MaterialPageRoute(builder: (context) => CreateNew()));
             Get.offAllNamed('/home');
             break;
           case 2:
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Profile()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Profile()));
             Get.offAllNamed('/profile');
             break;
         }
@@ -53,41 +55,3 @@ class BottomNavBar extends StatelessWidget {
     );
   }
 }
-// GNav(
-//             gap: 8,
-//             // activeColor: Colors.blue,
-//             backgroundColor: Colors.black,
-//             onTabChange: (value) {
-//               print(value);
-//             },
-//             tabs: [
-//               GButton(
-//                 icon: Icons.home,
-//                 text: 'Home',
-//                 onPressed: () {
-//                   Navigator.push(context,
-//                       MaterialPageRoute(builder: (context) => MyApp()));
-//                   Get.offAllNamed('/home');
-//                 },
-//               ),
-//               GButton(
-//                 icon: Icons.list,
-//                 text: 'Users',
-//                 onPressed: () {
-//                   Navigator.push(context,
-//                       MaterialPageRoute(builder: (context) => Users()));
-//                   Get.offAllNamed('/search');
-//                 },
-//               ),
-//               GButton(
-//                 icon: Icons.person,
-//                 text: 'Profile',
-//                 iconActiveColor: Colors.blue,
-//                 onPressed: () {
-//                   Navigator.push(context,
-//                       MaterialPageRoute(builder: (context) => Profile()));
-//                   Get.offAllNamed('/profile');
-//                 },
-//               ),
-//             ],
-//           ),

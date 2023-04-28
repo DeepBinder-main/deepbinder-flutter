@@ -16,31 +16,15 @@ class MainWidget extends StatefulWidget {
 }
 
 class _MainWidgetState extends State<MainWidget> {
-  // late MainModel _model;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _model = createModel(context, () => MainModel());
-  // }
-
-  // @override
-  // void dispose() {
-  //   _model.dispose();
-
-  //   _unfocusNode.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: Scaffold(
-        bottomNavigationBar: BottomNavBar(),
+        // bottomNavigationBar: const BottomNavBar(),
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryText,
         body: SafeArea(

@@ -18,7 +18,7 @@ class Profile extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter layout demo',
       home: Scaffold(
-          bottomNavigationBar: BottomNavBar(),
+          bottomNavigationBar: const BottomNavBar(2),
           appBar: AppBar(
             title: const Text('Profile'),
             // leading: const BackButton(color: Colors.white),
