@@ -204,7 +204,25 @@ class _TargetWidgetState extends State<TargetWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.name),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        leadingWidth: 30,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.asset(
+              'assets/images/logo-no-background (1).png',
+              fit: BoxFit.contain,
+              height: 50,
+            ),
+            Text(widget.name),
+          ],
+        ),
+        backgroundColor: Color.fromARGB(255, 21, 37, 117),
         bottom: _isLoading
             ? const PreferredSize(
                 child: LinearProgressIndicator(
@@ -215,33 +233,81 @@ class _TargetWidgetState extends State<TargetWidget> {
             : null,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Hostname: ${_data['hostname'] ?? ''}'),
-            Text('Ignore Cert: ${_data['ignore-cert'] ?? ''}'),
-            Text('Port: ${_data['port'] ?? ''}'),
-            Text('Disable Auth: ${_data['disable-auth'] ?? ''}'),
-            Text('Username: ${_data['username'] ?? ''}'),
-            ElevatedButton(
-              onPressed: () async {
-                await _deleteConnection(context);
-              },
-              child: _isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text('Delete Connection'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await _killSession(context);
-              },
-              child: _isLoading
-                  ? const CircularProgressIndicator(
-                      color: Colors.black,
-                    )
-                  : const Text('Kill Session'),
-            ),
-          ],
+        child: Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Card(
+  elevation: 4.0,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(10.0),
+  ),
+  child: Padding(
+    padding: EdgeInsets.all(16.0),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text('Hostname: '.toUpperCase() + '${_data['hostname'] ?? ''}'),
+        Text('Ignore Cert: '.toUpperCase() + '${_data['ignore-cert'] ?? ''}'),
+        Text('Port: '.toUpperCase() + '${_data['port'] ?? ''}'),
+        Text('Disable Auth: '.toUpperCase()+ '${_data['disable-auth'] ?? ''}'),
+        Text('Username: '.toUpperCase()+'${_data['username'] ?? ''}'),
+      ],
+    ),
+  ),
+),
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     Text('Hostname: '.toUpperCase() + '${_data['hostname'] ?? ''}'),
+              //     Text('Ignore Cert: '.toUpperCase() +
+              //     '${_data['ignore-cert'] ?? ''}'),
+              // Text('Port: '.toUpperCase() + '${_data['port'] ?? ''}'),
+              // Text('Disable Auth: ${_data['disable-auth'] ?? ''}'),
+              // Text('Username: ${_data['username'] ?? ''}'),
+              //   ],
+              // ),
+              
+              Container(
+                padding: EdgeInsets.all(10),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 21, 37, 117))),
+                  onPressed: () async {
+                    await _deleteConnection(context);
+                  },
+                  child: _isLoading
+                      ? const CircularProgressIndicator()
+                      : const Text('Delete Connection'),
+                ),
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromARGB(255, 21, 37, 117))),
+                onPressed: () async {
+                  await _killSession(context);
+                },
+                child: _isLoading
+                    ? const CircularProgressIndicator(
+                        color: Colors.black,
+                      )
+                    : const Text('Kill Session'),
+              ),
+            ],
+          ),
         ),
       ),
       endDrawer: Drawer(
@@ -251,9 +317,13 @@ class _TargetWidgetState extends State<TargetWidget> {
           itemBuilder: (BuildContext context, int index) {
             if (index == 0) {
               return const DrawerHeader(
-                child: Text('Connection History'),
+                child: Text('Connection History',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20)),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 21, 37, 117),
                 ),
               );
             }

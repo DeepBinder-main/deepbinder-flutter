@@ -16,34 +16,77 @@ class Profile extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
     final user = authProvider.user;
     return MaterialApp(
-      title: 'Flutter layout demo',
       home: Scaffold(
           bottomNavigationBar: const BottomNavBar(2),
           appBar: AppBar(
-            title: const Text('Profile'),
-            // leading: const BackButton(color: Colors.white),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            leadingWidth: 30,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  'assets/images/logo-no-background (1).png',
+                  fit: BoxFit.contain,
+                  height: 50,
+                ),
+                Text('Profile'),
+              ],
+            ),
+            backgroundColor: Color.fromARGB(255, 21, 37, 117),
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // crossAxisAlignment: CrossAxisAlignment.center
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Get.offAllNamed('/login');
-                  },
-                  child: const Text('Logout')),
-              Text(
-                'Authentication token: ' + user!.authToken,
-              ),
-
-              // const Spacer()
-              Text('Username: ' + user.username),
-              // const spacer() ;
-              Text('Datasource: ' + user.datsource),
-              // const spacer() ;
-            ],
+          body: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Authentication token: '.toUpperCase() + user!.authToken+ '\n',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Color.fromARGB(255, 2, 2, 2),
+                      fontWeight: FontWeight.bold),
+                ),
+                // const Spacer()
+                Text(
+                  'Username: '.toUpperCase() + user.username+ '\n',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Color.fromARGB(255, 2, 2, 2),
+                      fontWeight: FontWeight.bold),
+                ),
+                // const spacer() ;
+                Text(
+                  'Datasource: '.toUpperCase() + user.datsource+ '\n',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Color.fromARGB(255, 2, 2, 2),
+                      fontWeight: FontWeight.bold),
+                ),
+                Center(
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromARGB(255, 21, 37, 117))),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Get.offAllNamed('/login');
+                      },
+                      child: const Text('Logout')),
+                ),
+                // const spacer() ;
+              ],
+            ),
           )),
     );
   }
