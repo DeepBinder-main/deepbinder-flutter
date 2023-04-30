@@ -1,5 +1,9 @@
+import 'package:deepbinder/routes/create_single_user.dart';
 import 'package:deepbinder/routes/expandable_FAB.dart';
+import 'package:deepbinder/routes/list_of_connections.dart';
+import 'package:deepbinder/routes/simple_dialog_box.dart';
 import 'package:flutter/material.dart';
+import 'package:deepbinder/routes.dart';
 
 import 'nav_bar.dart';
 
@@ -22,19 +26,21 @@ class _MyNewPageState extends State<CreateNew> {
         ),
         backgroundColor: Color.fromARGB(255, 21, 37, 117),
       ),
-      body: const Center(
-        child: Text('This is my new page!'),
-      ),
+      body: ListOfConnections(),
       floatingActionButton: ExpandableFab(
         
         children: [
           IconButton(
             icon: Icon(Icons.person),
-            onPressed: () {},
+            onPressed: () {
+              showDialog(context: context, builder: (context) => CreateUserDialog());
+            },
           ),
           IconButton(
             icon: Icon(Icons.group),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/createGroup');
+            },
           ),
         ],
         icon: Icons.add,

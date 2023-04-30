@@ -5,6 +5,7 @@ import 'package:deepbinder/routes/users.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
+import 'package:deepbinder/routes.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:deepbinder/routes/shared.dart';
 
@@ -79,8 +80,10 @@ class Profile extends StatelessWidget {
                           backgroundColor: MaterialStateProperty.all<Color>(
                               Color.fromARGB(255, 21, 37, 117))),
                       onPressed: () {
-                        Navigator.pop(context);
-                        Get.offAllNamed('/login');
+                        print(context);
+                        Navigator.popAndPushNamed(context, '/login');
+                        // Navigator.pop(context, true);
+                        // Get.offAllNamed('/login');
                       },
                       child: const Text('Logout')),
                 ),
