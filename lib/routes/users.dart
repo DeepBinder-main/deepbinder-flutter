@@ -163,7 +163,6 @@
 // }
 
 import 'dart:convert';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:deepbinder/routes/session_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -242,29 +241,7 @@ class _MyWidgetState extends State<Users> {
     return Scaffold(
         bottomNavigationBar: const BottomNavBar(0),
         appBar: AppBar(
-          // add icon to appbar
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          leadingWidth: 30,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset(
-          'assets/images/logo-no-background (1).png',
-          fit: BoxFit.contain,
-          height: 50,
-        
-        ),
-              const Text('List of Connections'),
-            ],
-          ),
-          backgroundColor: Color.fromARGB(255, 21, 37, 117),
-
-          iconTheme: const IconThemeData(color: Colors.white),
+          title: const Text('List of Connections'),
           automaticallyImplyLeading: false,
         ),
         body: _isLoading
@@ -282,7 +259,6 @@ class _MyWidgetState extends State<Users> {
                   children: [
                     Expanded(
                       child: ListView.builder(
-                        
                         padding: const EdgeInsets.all(8),
                         itemCount: _connections.length,
                         itemBuilder: (BuildContext context, int index) {
@@ -305,36 +281,26 @@ class _MyWidgetState extends State<Users> {
                               );
                             },
                             child: Card(
-                              color: Colors.black38,
-                              
-                              borderOnForeground: true,
                               child: Row(
                                 children: [
                                   Expanded(
-                                    
-                                    child: Padding(
-                                      
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Column(
-                                      
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(connection['name'], style: TextStyle(color: Colors.white),),
-                                          Text('protocol : ' +
-                                              connection['protocol'], style: TextStyle(color: Colors.white),),
-                                          Text(connection['identifier'] , style: TextStyle(color: Colors.white),),
-                                          Text(connection['parentIdentifier'] , style: TextStyle(color: Colors.white),),  
-                                          Text('last active : '.toUpperCase() +
-                                              _formatDate(
-                                                  connection['lastActive']) , style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-                                        ],
-                                      ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(connection['name']),
+                                        Text('protocol : ' +
+                                            connection['protocol']),
+                                        Text(connection['identifier']),
+                                        Text(connection['parentIdentifier']),
+                                        Text('last active : ' +
+                                            _formatDate(
+                                                connection['lastActive'])),
+                                      ],
                                     ),
                                   ),
                                   Container(
                                     decoration: BoxDecoration(
-                                      
                                       shape: BoxShape.circle,
                                       color:
                                           connection['activeConnections'] == 1
@@ -345,7 +311,7 @@ class _MyWidgetState extends State<Users> {
                                     height: 10,
                                   ),
                                   const SizedBox(width: 8),
-                                  const Icon(Icons.navigate_next_rounded, color: Colors.white,),
+                                  const Icon(Icons.navigate_next_rounded),
                                 ],
                               ),
                             ),
