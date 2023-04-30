@@ -28,18 +28,19 @@ class _MyNewPageState extends State<CreateNew> {
       ),
       body: ListOfConnections(),
       floatingActionButton: ExpandableFab(
-        
         children: [
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
-              showDialog(context: context, builder: (context) => CreateUserDialog());
+              showDialog(
+                  context: context, builder: (context) => CreateUserDialog());
             },
           ),
           IconButton(
             icon: Icon(Icons.group),
             onPressed: () {
-              Navigator.pushNamed(context, '/createGroup');
+              showDialog(
+                  context: context, builder: (context) => CreateGroupDialog());
             },
           ),
         ],

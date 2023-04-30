@@ -1,5 +1,11 @@
+import 'dart:convert';
+
+import 'package:deepbinder/routes/session_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'create_group.dart';
 import 'create_single_user.dart';
+import 'package:http/http.dart' as http;
 
 class CreateGroupDialog extends StatefulWidget {
   const CreateGroupDialog({super.key});
@@ -9,9 +15,108 @@ class CreateGroupDialog extends StatefulWidget {
 }
 
 class _CreateGroupDialogState extends State<CreateGroupDialog> {
+  final TextEditingController identifierController = TextEditingController();
+  final TextEditingController disabledController = TextEditingController();
+  String _identifier = '';
+  String _disabled = '';
+  bool _isLoading = false;
+  String _errorMessage = '';
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final authProvider = Provider.of<AuthProvider>(context);
+    final user = authProvider.user;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SimpleDialog(
+        title: const Text('Create a new user group'),
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      _disabled = value;
+                    });
+                  },
+                  controller: identifierController,
+                  decoration: const InputDecoration(
+                    labelText: 'Identifier',
+                    hintText: 'Enter the user identifier',
+                  ),
+                ),
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      _identifier = value;
+                    });
+                  },
+                  controller: disabledController,
+                  decoration: const InputDecoration(
+                    labelText: 'Disabled',
+                    hintText: 'Enter the disabled attribute',
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (_errorMessage.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                _errorMessage,
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('CANCEL'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  _isLoading
+                      ? null
+                      : _createUserGroup(
+                          user!.uri, user.datsource, user.authToken);
+                },
+                child:
+                    _isLoading ? CircularProgressIndicator() : Text('Create'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _createUserGroup(
+      String uri, String datsource, String authToken) async {
+    String _identifier = identifierController.text;
+    String _disabled = disabledController.text;
+    bool _isLoading = false;
+    String _errorMessage = '';
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      await createUserGroup(uri, datsource, authToken, _identifier, _disabled);
+      Navigator.of(context).pop();
+    } catch (e) {
+      setState(() {
+        _errorMessage = e.toString();
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 }
 
@@ -58,12 +163,13 @@ class _CreateUserDialogState extends State<CreateUserDialog> {
     super.dispose();
   }
 
-  Future<void> _createUser() async {
+  Future<void> _createUser(
+      String uri, String datasource, String authToken) async {
     setState(() {
       _isLoading = true;
     });
     try {
-      await createUser(_username, _password);
+      await createUser(_username, _password, uri, datasource, authToken);
       Navigator.of(context).pop();
     } catch (e) {
       setState(() {
@@ -78,6 +184,8 @@ class _CreateUserDialogState extends State<CreateUserDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+    final user = authProvider.user;
     return SimpleDialog(
       title: const Text('Create User'),
       children: [
@@ -204,7 +312,11 @@ class _CreateUserDialogState extends State<CreateUserDialog> {
                   ),
                 ),
               ElevatedButton(
-                onPressed: _isLoading ? null : _createUser,
+                onPressed: () async {
+                  _isLoading
+                      ? null
+                      : _createUser(user!.uri, user.datsource, user.authToken);
+                },
                 child:
                     _isLoading ? CircularProgressIndicator() : Text('Create'),
               ),
