@@ -86,6 +86,7 @@ class _MyAppState extends State<ListOfUsers> {
   Widget _buildListTile(User user) {
     final authProvider = Provider.of<AuthProvider>(context);
     final user1 = authProvider.user;
+    var _isLoading = false;
     return GestureDetector(
       onTap: () async {
         print('user details');
@@ -126,7 +127,35 @@ class _MyAppState extends State<ListOfUsers> {
                     SizedBox(height: 8),
                     Text('Valid From: ${user.attributes['valid-from']}'),
                     SizedBox(height: 8),
-                    Text('Disabled: ${user.attributes['disabled']}')
+                    Text('Disabled: ${user.attributes['disabled']}'),
+                    TextButton(
+                      child: const Text('Delete'),
+                      onPressed: () async {
+                        Navigator.pop(context); // Close the confirmation dialog
+                        setState(() => _isLoading = true);
+                        var request = http.Request(
+                            'DELETE',
+                            Uri.parse(
+                                '${user1.uri}/api/session/data/${user1.datsource}/users/${user1.username}?token=${user1.authToken}'));
+
+                        http.StreamedResponse response = await request.send();
+
+                        if (response.statusCode == 200) {
+                          print(await response.stream.bytesToString());
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text('${user1.username} has been deleted.'),
+                            ),
+                          );
+                        } else {
+                          print(response.reasonPhrase);
+                        }
+                        setState(() =>
+                            _isLoading = false); // Hide the loading indicator
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -145,7 +174,7 @@ class _MyAppState extends State<ListOfUsers> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        bottomNavigationBar:  BottomNavBar(1),
+        bottomNavigationBar: BottomNavBar(1),
         appBar: AppBar(
           title: Text('List of Users'),
         ),

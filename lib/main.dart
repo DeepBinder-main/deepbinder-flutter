@@ -1,5 +1,6 @@
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:deepbinder/routes/session_modal.dart';
+import 'package:deepbinder/theme.dart';
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 // import 'package:quizz/routes.dart';
@@ -60,11 +61,8 @@ class _AppState extends State<App> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'DeepBinder',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: appTheme,
         home: const MainWidget(),
-        
       ),
     );
   }
