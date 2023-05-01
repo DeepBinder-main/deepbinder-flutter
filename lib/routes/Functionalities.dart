@@ -83,6 +83,10 @@ class KillConnection{
   }
 }
 
+class ShareConnection{
+  //TODO: Implement this
+}
+
 class CreateConnection{
   Future<Response> attemptToCreateConnection(SharedPreferences prefs, Dio dio, String protocol,String nameOfTheConnection, String hostname, String username, String password) async{
     var params = {

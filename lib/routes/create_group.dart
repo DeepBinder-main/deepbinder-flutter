@@ -27,7 +27,7 @@ Future<http.Response> createUserGroup(
   if (response.statusCode == 200) {
     print('User Group created successfully');
   } else {
-    print('Failed to create user: ${response.statusCode}');
+    print('Failed to create user: ${response.statusCode}'+response.body);
   }
   
   return http.post(

@@ -22,6 +22,12 @@ class _CreateGroupDialogState extends State<CreateGroupDialog> {
   bool _isLoading = false;
   String _errorMessage = '';
   @override
+  void dispose() {
+    identifierController.dispose();
+    disabledController.dispose();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final user = authProvider.user;

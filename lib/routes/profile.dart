@@ -18,7 +18,7 @@ class Profile extends StatelessWidget {
     final user = authProvider.user;
     return MaterialApp(
       home: Scaffold(
-          bottomNavigationBar: const BottomNavBar(2),
+          bottomNavigationBar:  BottomNavBar(2),
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
