@@ -1,9 +1,19 @@
+import 'dart:convert';
+
+import 'package:deepbinder/routes/session_modal.dart';
 import 'package:deepbinder/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:deepbinder/routes/list_of_groups.dart';
 import 'package:deepbinder/routes/list_of_users.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -14,7 +24,11 @@ class AppDrawer extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
-                  icon: const Icon(Icons.arrow_back,color: Colors.white,size: 30,),
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -54,8 +68,8 @@ class AppDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        ListOfGroups(userGroup: UserGroup.fromJson({}))),
+                  builder: (context) => ListOfGroups(),
+                ),
               );
             },
           ),

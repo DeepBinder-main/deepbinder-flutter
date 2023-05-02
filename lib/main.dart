@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // import 'package:quizz/services/services.dart';
 // import 'package:deepbinder/routes/shared.dart';
 import 'package:deepbinder/routes/home.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 // import 'package:quizz/theme.dart';
 
