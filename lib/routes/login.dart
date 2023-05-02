@@ -2,6 +2,7 @@
 import 'package:deepbinder/routes.dart';
 import 'package:deepbinder/routes/home.dart';
 import 'package:deepbinder/routes/profile.dart';
+import 'package:deepbinder/theme.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -109,7 +110,7 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+      backgroundColor: appTheme.primaryColor,
       body: Form(
         key: _formKey,
         autovalidateMode: AutovalidateMode.always,

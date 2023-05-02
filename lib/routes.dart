@@ -6,6 +6,7 @@
 // import 'dart:js';
 // import 'package:deepbinder/routes/page.dart';
 import 'package:deepbinder/routes/about.dart';
+import 'package:deepbinder/routes/create.dart';
 import 'package:deepbinder/routes/create_group.dart';
 import 'package:deepbinder/routes/create_single_user.dart';
 import 'package:deepbinder/routes/home.dart';
@@ -20,7 +21,7 @@ import 'routes/profile.dart';
 var appRoutes = {
   // '/': (context) => HomeScreen(),
   '/login': (context) => LoginWidget(),
-  '/home': (context) => MyApp(),
+  '/home': (context) => HomeScreen(),
   '/users': (context) => Users(),
   '/createGroup': (context) => CreateGroupDialog(),
   '/createUser': (context) => CreateUserDialog(),

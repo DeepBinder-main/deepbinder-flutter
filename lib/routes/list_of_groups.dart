@@ -153,7 +153,7 @@ class ListOfGroups extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                userGroup.identifier,
+                userGroup.identifier.toString(),
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 8),
@@ -172,7 +172,7 @@ class ListOfGroups extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(userGroup.identifier),
+        title: Text(userGroup.identifier.toString()),
         content: Text('Disabled: ${userGroup.disabled}'),
         actions: [
           TextButton(

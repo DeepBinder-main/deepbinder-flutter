@@ -10,6 +10,7 @@
  */
 
 import 'dart:async';
+import 'package:deepbinder/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -23,9 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'BottomNavbar Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.indigo,
-        ),
+        theme: appTheme,
         routes: {
           // This route needs to be registered, Because
           //  we are pushing this on the main Navigator Stack on line 754 (isRootNavigator:true)

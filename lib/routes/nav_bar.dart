@@ -10,38 +10,15 @@ import "profile.dart";
 
 class BottomNavBar extends StatelessWidget {
   BottomNavBar(int i, {super.key});
-  var color_selected = Colors.grey;
+  var color_selected = Color.fromARGB(255, 164, 0, 0);
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      // selectedItemColor: Colors.red,
-      items: [
-        BottomNavigationBarItem(
-            icon: Icon(
-              Icons.list_alt_rounded,
-              size: 20,
-              color: color_selected,
-            ),
-            label: "Connections"),
-        BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              size: 20,
-              color: color_selected,
-            ),
-            label: "Home"),
-        BottomNavigationBarItem(
-            icon: Icon(
-              Icons.rocket_rounded,
-              size: 20,
-              color: color_selected,
-            ),
-            label: "Profile"),
-      ],
-      onTap: (int index) {
+      // selectedItemColor: Color.fromARGB(255, 0, 0, 0),
+       onTap: (int index) {
         switch (index) {
           case 0:
-          color_selected = Colors.blue;
+          color_selected =Colors.blue;
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => Users()));
             Get.offAllNamed('/users');
@@ -60,6 +37,32 @@ class BottomNavBar extends StatelessWidget {
             break;
         }
       },
+      items: [
+        BottomNavigationBarItem(
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+            icon: Icon(
+              Icons.list_alt_rounded,
+              size: 20,
+              color: color_selected,
+              
+            ),
+            label: "Connections"),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              size: 20,
+              color: color_selected,
+            ),
+            label: "Home"),
+        BottomNavigationBarItem(
+            icon: Icon(
+              Icons.rocket_rounded,
+              size: 20,
+              color: color_selected,
+            ),
+            label: "Profile"),
+      ],
+     
     );
   }
 }

@@ -94,7 +94,8 @@ class _ExpandableFabState extends State<ExpandableFab>
               onPressed: _toggle,
               backgroundColor: Color.fromARGB(255, 21, 37, 117),
               child: AnimatedIcon(
-                icon: AnimatedIcons.menu_arrow,
+                icon: AnimatedIcons.add_event,
+                color: Colors.purple,
                 progress: _animationIcon,
               ),
             ),

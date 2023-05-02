@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:deepbinder/routes/nav_bar.dart';
 import 'package:deepbinder/routes/session_modal.dart';
+import 'package:deepbinder/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -129,6 +130,7 @@ class _MyAppState extends State<ListOfUsers> {
                     SizedBox(height: 8),
                     Text('Disabled: ${user.attributes['disabled']}'),
                     TextButton(
+                      //TODO: Added delete user functionality but not working
                       child: const Text('Delete'),
                       onPressed: () async {
                         Navigator.pop(context); // Close the confirmation dialog
@@ -173,10 +175,18 @@ class _MyAppState extends State<ListOfUsers> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: appTheme,
       home: Scaffold(
         bottomNavigationBar: BottomNavBar(1),
+        
         appBar: AppBar(
+          leading: Image.asset(
+            'assets/images/logo-no-background (1).png',
+            fit: BoxFit.contain,
+            height: 50,
+          ),
           title: Text('List of Users'),
+          backgroundColor: appTheme.primaryColor,
         ),
         body: Center(
           child: FutureBuilder(
