@@ -2,6 +2,7 @@ import 'package:deepbinder/routes/about.dart';
 import 'package:deepbinder/routes/nav_bar.dart';
 import 'package:deepbinder/routes/session_modal.dart';
 import 'package:deepbinder/routes/users.dart';
+import 'package:deepbinder/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
@@ -17,15 +18,16 @@ class Profile extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
     final user = authProvider.user;
     return MaterialApp(
+      theme: appTheme,
       home: Scaffold(
-          bottomNavigationBar: const BottomNavBar(2),
+          bottomNavigationBar:  BottomNavBar(2),
           appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
+            // leading: IconButton(
+              // icon: const Icon(Icons.arrow_back),
+              // onPressed: () {
+              //   Navigator.pop(context);
+              // },
+            // ),
             leadingWidth: 30,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,7 +52,7 @@ class Profile extends StatelessWidget {
                   'Authentication token: '.toUpperCase() + user!.authToken+ '\n',
                   style: TextStyle(
                       fontSize: 20,
-                      color: Color.fromARGB(255, 2, 2, 2),
+                      // color: Color.fromARGB(255, 2, 2, 2),
                       fontWeight: FontWeight.bold),
                 ),
                 // const Spacer()
@@ -58,7 +60,7 @@ class Profile extends StatelessWidget {
                   'Username: '.toUpperCase() + user.username+ '\n',
                   style: TextStyle(
                       fontSize: 20,
-                      color: Color.fromARGB(255, 2, 2, 2),
+                      // color: Color.fromARGB(255, 2, 2, 2),
                       fontWeight: FontWeight.bold),
                 ),
                 // const spacer() ;
@@ -66,7 +68,7 @@ class Profile extends StatelessWidget {
                   'Datasource: '.toUpperCase() + user.datsource+ '\n',
                   style: TextStyle(
                       fontSize: 20,
-                      color: Color.fromARGB(255, 2, 2, 2),
+                      // color: Color.fromARGB(255, 2, 2, 2),
                       fontWeight: FontWeight.bold),
                 ),
                 Center(

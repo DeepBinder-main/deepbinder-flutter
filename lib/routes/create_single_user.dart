@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'connection_widget.dart';
 import 'package:http/http.dart' as http;
 
-Future<void> createUser(String username, String password, String uri, String datasource, String authToken) async {
+Future<void> createUser(String username, String password, String uri,
+    String datasource, String authToken) async {
   var headers = {'Content-Type': 'application/json'};
   var request = http.Request('POST',
-      Uri.parse('$uri/session/data/$datasource/users?token=$authToken'));
+      Uri.parse('$uri/api/session/data/$datasource/users?token=$authToken'));
   request.body = json.encode({
     "username": username,
     "password": password,

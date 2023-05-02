@@ -240,7 +240,7 @@ class _MyWidgetState extends State<Users> {
     _connections.sort(
         (a, b) => b['activeConnections'].compareTo(a['activeConnections']));
     return Scaffold(
-        bottomNavigationBar: const BottomNavBar(0),
+        bottomNavigationBar:  BottomNavBar(0),
         appBar: AppBar(
           // add icon to appbar
           leading: IconButton(

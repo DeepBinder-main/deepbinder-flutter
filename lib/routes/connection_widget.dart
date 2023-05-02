@@ -204,13 +204,13 @@ class _TargetWidgetState extends State<TargetWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        leadingWidth: 30,
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        // ),
+        // leadingWidth: 30,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -226,7 +226,7 @@ class _TargetWidgetState extends State<TargetWidget> {
         bottom: _isLoading
             ? const PreferredSize(
                 child: LinearProgressIndicator(
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 255, 255, 255),
                 ),
                 preferredSize: Size.fromHeight(4.0),
               )
