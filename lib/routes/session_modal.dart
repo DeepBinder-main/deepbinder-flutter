@@ -6,6 +6,7 @@ import 'package:deepbinder/routes/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'page.dart';
 import 'profile_modal.dart';
 
@@ -29,6 +30,8 @@ class User {
       uri: json['uri'],
     );
   }
+
+  get password => password;
 }
 
 class AuthProvider extends ChangeNotifier {
@@ -82,7 +85,7 @@ class AuthProvider extends ChangeNotifier {
       // throw Exception('Failed to login');
       final snackBar = SnackBar(
         content: const Text('Failed to login'),
-        backgroundColor: (Colors.black),
+        backgroundColor: (Color.fromARGB(255, 249, 249, 249)),
         action: SnackBarAction(
           label: 'dismiss',
           onPressed: () {},
@@ -90,6 +93,24 @@ class AuthProvider extends ChangeNotifier {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+  }
+
+  refreshUser(username,password,uri) async {
+    var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+    var request =
+        http.Request('POST', Uri.parse(uri + '/api/tokens?token=null'));
+    request.bodyFields = {
+      'username': username,
+      'password': password,
+    };
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+  print(await response.stream.bytesToString());
+}
+else {
+  print(response.reasonPhrase);
+}
   }
 
   // void logout() {

@@ -16,64 +16,67 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.only(right: 20),
-        children: <Widget>[
-          DrawerHeader(
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                    size: 30,
+    return MaterialApp(
+      theme: ThemeData.dark(useMaterial3: true),
+      home: Drawer(
+        child: ListView(
+          padding: EdgeInsets.only(right: 20),
+          children: <Widget>[
+            DrawerHeader(
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Column(
-                  children: [
-                    Image.asset(
-                      'assets/images/logo-no-background (1).png',
-                      height: 110,
-                    ),
-                    Text(
-                      'Manage your users and groups',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ],
-                ),
-              ],
+                  Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/logo-no-background (1).png',
+                        height: 110,
+                      ),
+                      Text(
+                        'Manage your users and groups',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                color: appTheme.primaryColor,
+              ),
             ),
-            decoration: BoxDecoration(
-              color: appTheme.primaryColor,
+            ListTile(
+              title: Text('List of Users'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ListOfUsers()),
+                );
+              },
             ),
-          ),
-          ListTile(
-            title: Text('List of Users'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ListOfUsers()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('List of Groups'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ListOfGroups(),
-                ),
-              );
-            },
-          ),
-        ],
+            ListTile(
+              title: Text('List of Groups'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ListOfGroups(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

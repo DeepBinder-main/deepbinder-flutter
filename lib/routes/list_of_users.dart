@@ -175,15 +175,26 @@ class _MyAppState extends State<ListOfUsers> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: appTheme,
+      // theme: appTheme,
+      theme:ThemeData.dark(useMaterial3: true),
       home: Scaffold(
         bottomNavigationBar: BottomNavBar(1),
-        
         appBar: AppBar(
-          leading: Image.asset(
-            'assets/images/logo-no-background (1).png',
-            fit: BoxFit.contain,
-            height: 50,
+          leading: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back),
+                color: Colors.white,
+              ),
+              // Image.asset(
+              //   'assets/images/logo-no-background (1).png',
+              //   fit: BoxFit.contain,
+              //   height: 50,
+              // ),
+            ],
           ),
           title: Text('List of Users'),
           backgroundColor: appTheme.primaryColor,

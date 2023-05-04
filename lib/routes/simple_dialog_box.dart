@@ -192,144 +192,147 @@ class _CreateUserDialogState extends State<CreateUserDialog> {
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
     final user = authProvider.user;
-    return SimpleDialog(
-      title: const Text('Create User'),
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
-                onChanged: (value) {
-                  setState(() {
-                    _username = value;
-                  });
-                },
-              ),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                onChanged: (value) {
-                  setState(() {
-                    _password = value;
-                  });
-                },
-              ),
-              TextFormField(
-                controller: _disabledController,
-                decoration: InputDecoration(labelText: 'Disabled'),
-                onChanged: (value) {
-                  setState(() {
-                    _attributes['disabled'] = value;
-                  });
-                },
-              ),
-              TextFormField(
-                controller: _expiredController,
-                decoration: InputDecoration(labelText: 'Expired'),
-                onChanged: (value) {
-                  setState(() {
-                    _attributes['expired'] = value;
-                  });
-                },
-              ),
-              TextFormField(
-                controller: _accessWindowStartController,
-                decoration: InputDecoration(labelText: 'Access Window Start'),
-                onChanged: (value) {
-                  setState(() {
-                    _attributes['access-window-start'] = value;
-                  });
-                },
-              ),
-              TextFormField(
-                controller: _accessWindowEndController,
-                decoration: InputDecoration(labelText: 'Access Window End'),
-                onChanged: (value) {
-                  setState(() {
-                    _attributes['access-window-end'] = value;
-                  });
-                },
-              ),
-              TextFormField(
-                controller: _validFromController,
-                decoration: InputDecoration(labelText: 'Valid From'),
-                onChanged: (value) {
-                  setState(() {
-                    _attributes['valid-from'] = value;
-                  });
-                },
-              ),
-              TextFormField(
-                controller: _validUntilController,
-                decoration: InputDecoration(labelText: 'Valid Until'),
-                onChanged: (value) {
-                  setState(() {
-                    _attributes['valid-until'] = value;
-                  });
-                },
-              ),
-              TextFormField(
-                controller: _timezoneController,
-                decoration: InputDecoration(labelText: 'Timezone'),
-                onChanged: (value) {
-                  setState(() {
-                    _attributes['timezone'] = value;
-                  });
-                },
-              ),
-              TextFormField(
-                controller: _fullNameController,
-                decoration: InputDecoration(labelText: 'Full Name'),
-                onChanged: (value) {
-                  setState(() {
-                    _attributes['guac-full-name'] = value;
-                  });
-                },
-              ),
-              TextFormField(
-                controller: _organizationController,
-                decoration: InputDecoration(labelText: 'Organization'),
-                onChanged: (value) {
-                  setState(() {
-                    _attributes['guac-organization'] = value;
-                  });
-                },
-              ),
-              TextFormField(
-                controller: _organizationalRoleController,
-                decoration: InputDecoration(labelText: 'Organizational Role'),
-                onChanged: (value) {
-                  setState(() {
-                    _attributes['guac-organizational-role'] = value;
-                  });
-                },
-              ),
-              if (_errorMessage.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    _errorMessage,
-                    style: TextStyle(color: Colors.red),
-                  ),
+    return Provider<AuthProvider>(
+      create: (_) => AuthProvider(),
+      child: SimpleDialog(
+        title: const Text('Create User'),
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(labelText: 'Username'),
+                  onChanged: (value) {
+                    setState(() {
+                      _username = value;
+                    });
+                  },
                 ),
-              ElevatedButton(
-                onPressed: () async {
-                  _isLoading
-                      ? null
-                      : _createUser(user!.uri, user.datsource, user.authToken);
-                },
-                child:
-                    _isLoading ? CircularProgressIndicator() : Text('Create'),
-              ),
-            ],
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(labelText: 'Password'),
+                  obscureText: true,
+                  onChanged: (value) {
+                    setState(() {
+                      _password = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: _disabledController,
+                  decoration: InputDecoration(labelText: 'Disabled'),
+                  onChanged: (value) {
+                    setState(() {
+                      _attributes['disabled'] = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: _expiredController,
+                  decoration: InputDecoration(labelText: 'Expired'),
+                  onChanged: (value) {
+                    setState(() {
+                      _attributes['expired'] = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: _accessWindowStartController,
+                  decoration: InputDecoration(labelText: 'Access Window Start'),
+                  onChanged: (value) {
+                    setState(() {
+                      _attributes['access-window-start'] = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: _accessWindowEndController,
+                  decoration: InputDecoration(labelText: 'Access Window End'),
+                  onChanged: (value) {
+                    setState(() {
+                      _attributes['access-window-end'] = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: _validFromController,
+                  decoration: InputDecoration(labelText: 'Valid From'),
+                  onChanged: (value) {
+                    setState(() {
+                      _attributes['valid-from'] = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: _validUntilController,
+                  decoration: InputDecoration(labelText: 'Valid Until'),
+                  onChanged: (value) {
+                    setState(() {
+                      _attributes['valid-until'] = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: _timezoneController,
+                  decoration: InputDecoration(labelText: 'Timezone'),
+                  onChanged: (value) {
+                    setState(() {
+                      _attributes['timezone'] = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: _fullNameController,
+                  decoration: InputDecoration(labelText: 'Full Name'),
+                  onChanged: (value) {
+                    setState(() {
+                      _attributes['guac-full-name'] = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: _organizationController,
+                  decoration: InputDecoration(labelText: 'Organization'),
+                  onChanged: (value) {
+                    setState(() {
+                      _attributes['guac-organization'] = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  controller: _organizationalRoleController,
+                  decoration: InputDecoration(labelText: 'Organizational Role'),
+                  onChanged: (value) {
+                    setState(() {
+                      _attributes['guac-organizational-role'] = value;
+                    });
+                  },
+                ),
+                if (_errorMessage.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      _errorMessage,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ElevatedButton(
+                  onPressed: () async {
+                    _isLoading
+                        ? null
+                        : _createUser(user!.uri, user.datsource, user.authToken);
+                  },
+                  child:
+                      _isLoading ? CircularProgressIndicator() : Text('CREATE', style: TextStyle(fontWeight: FontWeight.bold),),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

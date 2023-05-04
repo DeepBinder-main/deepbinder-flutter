@@ -1,4 +1,6 @@
 // import 'package:firebase_core/firebase_core.dart';
+import 'package:deepbinder/routes/create.dart';
+import 'package:deepbinder/routes/login.dart';
 import 'package:deepbinder/routes/session_modal.dart';
 import 'package:deepbinder/theme.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +8,22 @@ import 'package:flutter/material.dart';
 // import 'package:quizz/routes.dart';
 // import 'package:quizz/services/services.dart';
 // import 'package:deepbinder/routes/shared.dart';
+import 'routes/login.dart';
 import 'package:deepbinder/routes/home.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:quizz/theme.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const App());
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var username = prefs.getString('username');
+  var password = prefs.getString('password');
+  print(username);
+  print(password);
+  runApp(MaterialApp(home: ((password) == null) ? const App() : HomeScreen()));
+  // runApp(const App());
 }
 
 class App extends StatefulWidget {
@@ -55,11 +65,35 @@ class _AppState extends State<App> {
     //   },
     // );
     // add provider
-    return MultiProvider(
+//     return MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider(
+//           create: (_) => AuthProvider(),
+//           child: Builder(
+//             builder: (context) {
+//               return MaterialApp(
+//                 debugShowCheckedModeBanner: false,
+//                 title: 'DeepBinder',
+//                 theme: appTheme,
+//                 home: const MainWidget(),
+//               );
+//             },
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
+return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
-      child: MaterialApp(
+
+
+
+
+
+      builder:(context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'DeepBinder',
         theme: appTheme,

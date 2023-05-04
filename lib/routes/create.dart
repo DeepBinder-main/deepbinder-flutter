@@ -18,7 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: appTheme,
+      // theme: appTheme,
+      theme: ThemeData.dark(useMaterial3: true),
       home: Scaffold(
         bottomNavigationBar: BottomNavBar(1),
         appBar: AppBar(
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Image.asset(
                 'assets/images/logo-no-background (1).png',
                 fit: BoxFit.contain,
-                height: 200 ,
+                height: 200,
                 width: 200,
                 alignment: Alignment.center,
               ),
@@ -64,14 +65,20 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: ExpandableFab(
           children: [
             IconButton(
-              icon: Icon(Icons.person),
+              icon: Icon(
+                Icons.person,
+                color: Color.fromARGB(255, 186, 50, 41),
+              ),
               onPressed: () {
                 showDialog(
                     context: context, builder: (context) => CreateUserDialog());
               },
             ),
             IconButton(
-              icon: Icon(Icons.group),
+              icon: Icon(
+                Icons.group,
+                color: Color.fromARGB(255, 164, 43, 35),
+              ),
               onPressed: () {
                 showDialog(
                     context: context,

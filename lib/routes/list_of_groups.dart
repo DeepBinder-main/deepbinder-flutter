@@ -117,6 +117,7 @@
 import 'dart:convert';
 import 'package:deepbinder/routes/app_drawer.dart';
 import 'package:deepbinder/routes/session_modal.dart';
+import 'package:deepbinder/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -139,11 +140,15 @@ class _UserGroupsPageState extends State<ListOfGroups> {
   void initState() {
     super.initState();
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    _fetchUserGroups(authProvider.user!.uri,authProvider.user!.datsource, authProvider.user!.authToken);
+    _fetchUserGroups(authProvider.user!.uri, authProvider.user!.datsource,
+        authProvider.user!.authToken);
   }
 
-  Future<void> _fetchUserGroups(String uri, String datasource, String token) async {
-    final response = await http.get(Uri.parse('$uri/api/session/data/$datasource/userGroups?token=$token'),);
+  Future<void> _fetchUserGroups(
+      String uri, String datasource, String token) async {
+    final response = await http.get(
+      Uri.parse('$uri/api/session/data/$datasource/userGroups?token=$token'),
+    );
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       setState(() {
@@ -154,24 +159,72 @@ class _UserGroupsPageState extends State<ListOfGroups> {
     }
   }
 
+  Future<void> _showDeleteDialog(
+      BuildContext context, dynamic userGroup) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Group'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Are you sure you want to delete this group?'),
+                SizedBox(height: 10),
+                Text('Identifier: ${userGroup['identifier']}'),
+                SizedBox(height: 10),
+                Text('Attributes: ${userGroup['attributes']}'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Delete'),
+              onPressed: () {
+                // TODO: Delete group here
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Groups'),
+        backgroundColor: appTheme.primaryColor,
+        title: Text('List of Groups'),
       ),
       body: _userGroups.isNotEmpty
           ? ListView.builder(
               itemCount: _userGroups.length,
               itemBuilder: (context, index) {
                 final userGroup = _userGroups[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(userGroup['identifier']),
-                    subtitle: Text(userGroup['attributes']['disabled'] == null
-                        ? 'Enabled'
-                        : 'Disabled'),
-                  ),
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: GestureDetector(
+                      child: Card(
+                        child: ListTile(
+                          minVerticalPadding: 20,
+                          title: Text(userGroup['identifier']),
+                          subtitle: Text(
+                              userGroup['attributes']['disabled'] == null
+                                  ? 'Enabled'
+                                  : 'Disabled'),
+                        ),
+                      ),
+                      onTap: () {
+                        _showDeleteDialog(context, userGroup);
+                      }),
                 );
               },
             )

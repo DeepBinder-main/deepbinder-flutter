@@ -1,5 +1,8 @@
 // import 'package:dio/dio.dart';
+import 'dart:async';
+
 import 'package:deepbinder/routes.dart';
+import 'package:deepbinder/routes/create.dart';
 import 'package:deepbinder/routes/home.dart';
 import 'package:deepbinder/routes/profile.dart';
 import 'package:deepbinder/theme.dart';
@@ -13,6 +16,428 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:deepbinder/routes/session_modal.dart';
 
+// class LoginWidget extends StatefulWidget {
+//   const LoginWidget({Key? key}) : super(key: key);
+
+//   @override
+//   _LoginWidgetState createState() => _LoginWidgetState();
+// }
+
+// class _LoginWidgetState extends State<LoginWidget> {
+//   static const String USERKEY = 'username';
+//   static const String PASSKEY = 'password';
+//   static const String LOGINKEY = 'isLoggedIn';
+//   var userValue;
+//   var passValue;
+//   final _formKey = GlobalKey<FormState>();
+//   final scaffoldKey = GlobalKey<ScaffoldState>();
+//   TextEditingController domainController = TextEditingController();
+//   TextEditingController usernameController = TextEditingController();
+//   TextEditingController passwordController = TextEditingController();
+
+//   bool _isLoading = false;
+
+//   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+//   Future setLoginStatus() async {
+//     Navigator.push(
+//         context, MaterialPageRoute(builder: (context) => const MainWidget()));
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     getValue();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     bool _passwordVisibility = false;
+
+//     final authProvider = Provider.of<AuthProvider>(context);
+
+//     return Scaffold(
+//       key: scaffoldKey,
+//       backgroundColor: appTheme.primaryColor,
+//       body: Form(
+//         key: _formKey,
+//         autovalidateMode: AutovalidateMode.always,
+//         child: SingleChildScrollView(
+//           child: Column(
+//             mainAxisSize: MainAxisSize.max,
+//             children: [
+//               Row(
+//                 mainAxisSize: MainAxisSize.max,
+//                 children: [
+//                   Container(
+//                     width: MediaQuery.of(context).size.width,
+//                     height: 200,
+//                     decoration: BoxDecoration(
+//                       color: FlutterFlowTheme.of(context).primaryColor,
+//                       image: DecorationImage(
+//                         fit: BoxFit.fitWidth,
+//                         image: Image.asset(
+//                           'assets/images/logo-black-removebg-previewcopy.png',
+//                         ).image,
+//                       ),
+//                     ),
+//                     alignment:
+//                         const AlignmentDirectional(-0.5, 0.30000000000000004),
+//                   ),
+//                 ],
+//               ),
+//               Padding(
+//                 padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+//                 child: Row(
+//                   mainAxisSize: MainAxisSize.min,
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Expanded(
+//                       child: Padding(
+//                         padding:
+//                             const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+//                         child: Column(
+//                           mainAxisSize: MainAxisSize.max,
+//                           children: [
+//                             Padding(
+//                               padding: const EdgeInsetsDirectional.fromSTEB(
+//                                   0, 0, 0, 18),
+//                               child: TextFormField(
+//                                 controller: domainController,
+//                                 obscureText: false,
+//                                 decoration: InputDecoration(
+//                                   labelText: 'Domain Address',
+//                                   hintText: 'Your Domain Address',
+//                                   hintStyle: FlutterFlowTheme.of(context)
+//                                       .bodyText1
+//                                       .override(
+//                                         fontFamily: 'Outfit',
+//                                         color: const Color(0x9AFFFFFF),
+//                                       ),
+//                                   enabledBorder: OutlineInputBorder(
+//                                     borderSide: BorderSide(
+//                                       color: FlutterFlowTheme.of(context)
+//                                           .secondaryColor,
+//                                       width: 1,
+//                                     ),
+//                                   ),
+//                                   focusedBorder: const OutlineInputBorder(
+//                                     borderSide: BorderSide(
+//                                       color: Color(0x00000000),
+//                                       width: 1,
+//                                     ),
+//                                   ),
+//                                   errorBorder: const OutlineInputBorder(
+//                                     borderSide: BorderSide(
+//                                       color: Color(0x00000000),
+//                                       width: 1,
+//                                     ),
+//                                   ),
+//                                   focusedErrorBorder: const OutlineInputBorder(
+//                                     borderSide: BorderSide(
+//                                       color: Color(0x00000000),
+//                                       width: 1,
+//                                     ),
+//                                   ),
+//                                   filled: true,
+//                                   fillColor: FlutterFlowTheme.of(context)
+//                                       .secondaryColor,
+//                                   prefixIcon: Icon(
+//                                     Icons.link,
+//                                     color: FlutterFlowTheme.of(context)
+//                                         .primaryColor,
+//                                   ),
+//                                 ),
+//                                 style: FlutterFlowTheme.of(context).bodyText1,
+//                                 keyboardType: TextInputType.url,
+//                                 validator: (value) {
+//                                   if (value == null || value.isEmpty) {
+//                                     return 'Please enter your domain';
+//                                   }
+//                                   return null;
+//                                 },
+//                               ),
+//                             ),
+//                             TextFormField(
+//                               controller: usernameController,
+//                               obscureText: false,
+//                               decoration: InputDecoration(
+//                                 labelText: 'Username',
+//                                 hintText: 'Your Username',
+//                                 hintStyle: FlutterFlowTheme.of(context)
+//                                     .bodyText1
+//                                     .override(
+//                                       fontFamily: 'Outfit',
+//                                       color: Color.fromARGB(154, 255, 0, 0),
+//                                     ),
+//                                 enabledBorder: OutlineInputBorder(
+//                                   borderSide: BorderSide(
+//                                     color: FlutterFlowTheme.of(context)
+//                                         .secondaryColor,
+//                                     width: 1,
+//                                   ),
+//                                 ),
+//                                 focusedBorder: const OutlineInputBorder(
+//                                   borderSide: BorderSide(
+//                                     color: Color(0x00000000),
+//                                     width: 1,
+//                                   ),
+//                                 ),
+//                                 errorBorder: const OutlineInputBorder(
+//                                   borderSide: BorderSide(
+//                                     color: Color(0x00000000),
+//                                     width: 1,
+//                                   ),
+//                                 ),
+//                                 focusedErrorBorder: const OutlineInputBorder(
+//                                   borderSide: BorderSide(
+//                                     color: Color(0x00000000),
+//                                     width: 1,
+//                                   ),
+//                                 ),
+//                                 filled: true,
+//                                 fillColor:
+//                                     FlutterFlowTheme.of(context).secondaryColor,
+//                                 prefixIcon: Icon(
+//                                   Icons.email_outlined,
+//                                   color:
+//                                       FlutterFlowTheme.of(context).primaryColor,
+//                                 ),
+//                               ),
+//                               style: FlutterFlowTheme.of(context).bodyText1,
+//                               keyboardType: TextInputType.emailAddress,
+//                               validator: (value) {
+//                                 if (value == null || value.isEmpty) {
+//                                   return 'Please enter your Uerrname';
+//                                 }
+//                                 return null;
+//                               },
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsetsDirectional.fromSTEB(
+//                                   0, 20, 0, 0),
+//                               child: TextFormField(
+//                                 controller: passwordController,
+//                                 obscureText: !_passwordVisibility,
+//                                 decoration: InputDecoration(
+//                                   labelText: 'Password',
+//                                   hintText: 'Enter your password here...',
+//                                   hintStyle: FlutterFlowTheme.of(context)
+//                                       .bodyText1
+//                                       .override(
+//                                         fontFamily: 'Outfit',
+//                                         color: const Color(0x9AFFFFFF),
+//                                       ),
+//                                   enabledBorder: OutlineInputBorder(
+//                                     borderSide: BorderSide(
+//                                       color: FlutterFlowTheme.of(context)
+//                                           .secondaryColor,
+//                                       width: 1,
+//                                     ),
+//                                   ),
+//                                   focusedBorder: const OutlineInputBorder(
+//                                     borderSide: BorderSide(
+//                                       color: Color(0x00000000),
+//                                       width: 1,
+//                                     ),
+//                                   ),
+//                                   errorBorder: const OutlineInputBorder(
+//                                     borderSide: BorderSide(
+//                                       color: Color(0x00000000),
+//                                       width: 1,
+//                                     ),
+//                                   ),
+//                                   focusedErrorBorder: const OutlineInputBorder(
+//                                     borderSide: BorderSide(
+//                                       color: Color(0x00000000),
+//                                       width: 1,
+//                                     ),
+//                                   ),
+//                                   filled: true,
+//                                   fillColor: FlutterFlowTheme.of(context)
+//                                       .secondaryColor,
+//                                   prefixIcon: Icon(
+//                                     Icons.lock_outline,
+//                                     color: FlutterFlowTheme.of(context)
+//                                         .primaryColor,
+//                                   ),
+//                                   suffixIcon: InkWell(
+//                                     onTap: () => setState(
+//                                       () => _passwordVisibility =
+//                                           !_passwordVisibility,
+//                                     ),
+//                                     focusNode: FocusNode(skipTraversal: true),
+//                                     child: Icon(
+//                                       _passwordVisibility
+//                                           ? Icons.visibility_outlined
+//                                           : Icons.visibility_off_outlined,
+//                                       color: const Color(0x80FFFFFF),
+//                                       size: 22,
+//                                     ),
+//                                   ),
+//                                 ),
+//                                 style: FlutterFlowTheme.of(context).bodyText1,
+//                                 validator: (value) {
+//                                   if (value == null || value.isEmpty) {
+//                                     return 'Please enter your password';
+//                                   }
+//                                   return null;
+//                                 },
+//                               ),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsetsDirectional.fromSTEB(
+//                                   0, 24, 0, 0),
+//                               child: FFButtonWidget(
+//                                 onPressed: () async {
+//                                   var prefs =
+//                                       await SharedPreferences.getInstance();
+//                                   prefs.setString(
+//                                       USERKEY, usernameController.text);
+//                                   prefs.setString(
+//                                       PASSKEY, passwordController.text);
+//                                   prefs.setBool(LOGINKEY, true);
+//                                   print('Button pressed ...');
+//                                   print(usernameController.text);
+//                                   print(passwordController.text);
+//                                   print(domainController.text);
+//                                   if (_formKey.currentState!.validate()) {
+//                                     // _login();
+//                                     try {
+//                                       await authProvider.login(
+//                                         context,
+//                                         usernameController.text,
+//                                         passwordController.text,
+//                                         domainController.text,
+//                                       );
+//                                       // Navigator.of(context).pop();
+//                                     } catch (e) {
+//                                       print(e);
+//                                     }
+//                                   }
+//                                 },
+//                                 text: 'Login',
+//                                 options: FFButtonOptions(
+//                                   width: 200,
+//                                   height: 50,
+//                                   padding: const EdgeInsetsDirectional.fromSTEB(
+//                                       0, 0, 0, 0),
+//                                   iconPadding:
+//                                       const EdgeInsetsDirectional.fromSTEB(
+//                                           0, 0, 0, 0),
+//                                   color: Color.fromARGB(122, 0, 0, 0),
+//                                   textStyle: FlutterFlowTheme.of(context)
+//                                       .title1
+//                                       .override(
+//                                         fontFamily: 'Outfit',
+//                                         color: Colors.white,
+//                                         fontWeight: FontWeight.bold,
+//                                       ),
+//                                   elevation: 3,
+//                                   borderSide: const BorderSide(
+//                                     color: Colors.transparent,
+//                                     width: 1,
+//                                   ),
+//                                   //
+//                                 ),
+//                               ),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsetsDirectional.fromSTEB(
+//                                   0, 44, 0, 30),
+//                               child: Row(
+//                                 mainAxisSize: MainAxisSize.max,
+//                                 mainAxisAlignment: MainAxisAlignment.center,
+//                                 crossAxisAlignment: CrossAxisAlignment.end,
+//                                 children: [
+//                                   Padding(
+//                                     padding:
+//                                         const EdgeInsetsDirectional.fromSTEB(
+//                                             0, 0, 0, 6),
+//                                     child: Text(
+//                                       'Don’t have an account yet? ',
+//                                       style: FlutterFlowTheme.of(context)
+//                                           .bodyText1
+//                                           .override(
+//                                               fontFamily: 'Outfit',
+//                                               color: Colors.black),
+//                                     ),
+//                                   ),
+//                                   FFButtonWidget(
+//                                     onPressed: () {
+//                                       print('Button pressed ...');
+//                                     },
+//                                     text: 'Register',
+//                                     options: FFButtonOptions(
+//                                       width: 100,
+//                                       height: 32,
+//                                       padding:
+//                                           const EdgeInsetsDirectional.fromSTEB(
+//                                               0, 0, 0, 0),
+//                                       iconPadding:
+//                                           const EdgeInsetsDirectional.fromSTEB(
+//                                               0, 0, 0, 0),
+//                                       color: FlutterFlowTheme.of(context)
+//                                           .primaryColor,
+//                                       textStyle: FlutterFlowTheme.of(context)
+//                                           .title1
+//                                           .override(
+//                                             fontFamily: 'Outfit',
+//                                             color: Colors.white,
+//                                           ),
+//                                       elevation: 0,
+//                                       borderSide: const BorderSide(
+//                                         color: Colors.transparent,
+//                                         width: 1,
+//                                       ),
+//                                       // borderRadius: BorderRadius.circular(0),
+//                                     ),
+//                                   ),
+//                                 ],
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+
+//   void getValue() async {
+//     var prefs = await SharedPreferences.getInstance();
+//     var isLoggedin = prefs.getBool(LOGINKEY);
+//     prefs.getString(USERKEY);
+//     prefs.getString(PASSKEY);
+//     var getuser = prefs.getString(USERKEY);
+//     var getpass = prefs.getString(PASSKEY);
+//     userValue = getuser != null ? getuser : 'No User entered';
+//     passValue = getpass != null ? getpass : 'No Password entered';
+
+//     if (isLoggedin != null) {
+//       if (isLoggedin) {
+//         Navigator.pushReplacement(
+//           context,
+//           MaterialPageRoute(builder: (context) => HomeScreen()),
+//         );
+//       } else {
+//         Navigator.pushReplacement(
+//           context,
+//           MaterialPageRoute(builder: (context) => LoginWidget()),
+//         );
+//       }
+//     } else {
+//       Navigator.pushReplacement(
+//           context, MaterialPageRoute(builder: (context) => LoginWidget()));
+//     }
+//     setState(() {});
+//   }
+// }
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
 
@@ -346,6 +771,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   print(usernameController.text);
                                   print(passwordController.text);
                                   print(domainController.text);
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.setString('username',
+                                      usernameController.text);
+                                  prefs.setString('password',passwordController.text);
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext ctx) =>
+                                          HomeScreen(),
+                                    ),
+                                  );
                                   if (_formKey.currentState!.validate()) {
                                     // _login();
                                     try {

@@ -65,10 +65,13 @@ class _ExpandableFabState extends State<ExpandableFab>
       right: 16.0,
       child: ScaleTransition(
         scale: _animationIcon,
-        child: FloatingActionButton(
-          onPressed: () {},
-          child: widget.children[index],
-        
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FloatingActionButton(
+            onPressed: () {},
+            child: widget.children[index],
+          
+          ),
         ),
       ),
     );
@@ -95,7 +98,7 @@ class _ExpandableFabState extends State<ExpandableFab>
               backgroundColor: Color.fromARGB(255, 21, 37, 117),
               child: AnimatedIcon(
                 icon: AnimatedIcons.add_event,
-                color: Colors.purple,
+                color: Color.fromARGB(255, 172, 12, 12),
                 progress: _animationIcon,
               ),
             ),

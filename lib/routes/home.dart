@@ -26,7 +26,8 @@ class _MainWidgetState extends State<MainWidget> {
       child: Scaffold(
         // bottomNavigationBar: const BottomNavBar(),
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        // backgroundColor: FlutterFlowTheme.of(context).primaryText,
+        backgroundColor: Color.fromARGB(255, 240, 240, 240),
         body: SafeArea(
           child: Container(
             width: 437.8,
@@ -41,7 +42,7 @@ class _MainWidgetState extends State<MainWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(0, 0),
+                      alignment: Alignment.center,
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(51, 25, 0, 0),
                         child: Image.asset(
